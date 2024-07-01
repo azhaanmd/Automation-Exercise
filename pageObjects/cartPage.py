@@ -9,7 +9,7 @@ class CartPage:
 
     shoppingCartText = (By.CSS_SELECTOR, "li[class='active']")
     proceedToCheckoutButton = (By.CSS_SELECTOR, ".check_out")
-    registerLoginLink = (By.CSS_SELECTOR, "a[href*='/login']")
+    registerLoginLink = (By.CSS_SELECTOR, "p a[href*='/login']")
 
     def getShoppingCartText(self):
         return self.driver.find_element(*CartPage.shoppingCartText)
@@ -18,4 +18,5 @@ class CartPage:
         return self.driver.find_element(*CartPage.proceedToCheckoutButton)
 
     def getRegisterLoginLink(self):
+        #self.driver.execute_script("arguments[0].scrollIntoView();", element)
         return WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(CartPage.registerLoginLink))

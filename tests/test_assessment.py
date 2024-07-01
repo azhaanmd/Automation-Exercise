@@ -13,6 +13,7 @@ class TestAssessment(BaseClass):
         self.homePage = HomePage(self.driver)
         self.cartPage = CartPage(self.driver)
         self.registerLoginPage = RegisterLoginPage(self.driver)
+        self.signupPage = SignupPage(self.driver)
 
     def test_verify_home_page_visibility(self):
         homeButtonColor = self.homePage.getHomeButton().value_of_css_property("color")
@@ -28,18 +29,14 @@ class TestAssessment(BaseClass):
 
     def test_verify_account_created_after_checkout(self):
         self.cartPage.getProceedToCheckoutButton().click()
+
         self.cartPage.getRegisterLoginLink().click()
-        self.registerLoginPage.fillSignupForm("AZTest", "User")
+        self.registerLoginPage.fillSignupForm("AZTestsdf", "User@usser")
         self.registerLoginPage.getSignupButton().click()
 
     def test_verify_account_created_test(self):
-        self.driver.get("https://www.automationexercise.com/signup")
-        sleep(3)
-        self.registerLoginPage.fillSignupForm("AZTest", "User@us")
-        self.registerLoginPage.getSignupButton().click()
-        sleep(4)
-        signupPage = SignupPage(self.driver)
-        signupPage.fillSignUpFullForm(True, "nameee", "aa@aa.com", "1234aaaa", "8", "May", "1998", True, "firstname", "lastname",
-                                      "company", "address", "address2", "Australia", "State", "City", "ZipCode", "MobileNumber")
 
-        sleep(60)
+        self.signupPage.fillSignUpFullForm(True, "nameee", "aa@aaaa.com", "1234aaaa", "8", "May", "1998", True, "firstname", "lastname",
+                                      "company", "address", "address2", "Australia", "State", "City", "ZipCode", "MobileNumber")
+        self.signupPage.getCreateAccountButton().click()
+        sleep(20)

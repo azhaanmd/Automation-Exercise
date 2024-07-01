@@ -111,6 +111,9 @@ class SignupPage(BaseClass):
         self.getZipCode(zipcode)
         self.getMobileNumber(mobile)
 
+    def getCreateAccountButton(self):
+        return self.driver.find_element(*SignupPage.createAccountButton)
+
 
 
 
