@@ -8,7 +8,7 @@ class HomePage:
         self.driver = driver
 
     item = (By.CSS_SELECTOR, "a[data-product-id='11']")
-    continueShoppingButton = (By.CSS_SELECTOR, "button:contains('Continue Shopping')")
+    continueShoppingButton = (By.CSS_SELECTOR, ".btn.btn-success.close-modal.btn-block")
     cartLink = (By.CSS_SELECTOR, "a[href*='/view_cart']")
     homeButton = (By.CSS_SELECTOR, "a[href*='/']")
     slider = (By.ID, "slider-carousel")
@@ -20,7 +20,7 @@ class HomePage:
         return self.driver.find_element(*HomePage.item)
 
     def continueShopping(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn.btn-success.close-modal.btn-block")))
+        return WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(HomePage.continueShoppingButton))
 
 
 
