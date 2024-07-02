@@ -48,13 +48,13 @@ class SignupPage(BaseClass):
         return self.driver.find_element(*SignupPage.passwordField).send_keys(password)
 
     def selectDate(self, date):
-        return self.selectOptionByText(SignupPage.dateDropdown, date)
+        self.selectOptionByText(SignupPage.dateDropdown, date)
 
     def selectMonth(self, month):
-        return self.selectOptionByText(SignupPage.monthDropdown, month)
+        self.selectOptionByText(SignupPage.monthDropdown, month)
 
     def selectYear(self, year):
-        return self.selectOptionByText(SignupPage.yearDropdown, year)
+        self.selectOptionByText(SignupPage.yearDropdown, year)
 
     def checkNewsletter(self, requireNewsletter):
         if requireNewsletter:
@@ -78,7 +78,7 @@ class SignupPage(BaseClass):
         return self.driver.find_element(*SignupPage.address2Field).send_keys(address2)
 
     def selectCountry(self, country):
-        return self.selectOptionByText((SignupPage.countryDropdown), country)
+        self.selectOptionByText((SignupPage.countryDropdown), country)
 
     def getState(self, state):
         return self.driver.find_element(*SignupPage.stateField).send_keys(state)

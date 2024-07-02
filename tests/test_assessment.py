@@ -1,6 +1,7 @@
+import random
+import string
 from time import sleep
 import pytest
-from selenium.webdriver.support.color import Color
 from utilities.BaseClass import BaseClass
 from pageObjects.homePage import HomePage
 from pageObjects.cartPage import CartPage
@@ -8,6 +9,7 @@ from pageObjects.registerLoginPage import RegisterLoginPage
 from pageObjects.signupPage import SignupPage
 from pageObjects.accountCreationPage import AccountCreationPage
 from pageObjects.checkoutPage import CheckoutPage
+from pageObjects.paymentPage import PaymentPage
 
 class TestAssessment(BaseClass):
     @pytest.fixture(autouse=True)
@@ -18,10 +20,13 @@ class TestAssessment(BaseClass):
         self.signupPage = SignupPage(self.driver)
         self.accountCreatedPage = AccountCreationPage(self.driver)
         self.checkoutPage = CheckoutPage(self.driver)
+        self.paymentPage = PaymentPage(self.driver)
 
     def test_verify_home_page_visibility(self):
         homeButtonColor = self.homePage.getHomeButton().value_of_css_property("color")
-        print(homeButtonColor)
+        slider_visible = self.homePage.getSlider().is_displayed()
+        assert homeButtonColor == "rgba(66, 139, 202, 1)" and slider_visible
+
 
     def test_verify_add_product_and_cart_page_is_displayed(self):
         self.homePage.getItem().click()
@@ -33,43 +38,48 @@ class TestAssessment(BaseClass):
 
     def test_verify_account_created_after_checkout(self):
         self.cartPage.getProceedToCheckoutButton().click()
-
         self.cartPage.getRegisterLoginLink().click()
-        self.registerLoginPage.fillSignupForm("AZTestsdf", "User@usser")
+        res = ''.join(random.choices(string.ascii_lowercase +
+                                     string.digits, k=10))
+        random_email = str(res) + "@az112233test.com"
+        self.registerLoginPage.fillSignupForm("oldddddd", random_email)
         self.registerLoginPage.getSignupButton().click()
+        self.isMale = True
+        self.fullAddress = ["firstname", "lastname", "company", "address", "address2", "Australia", "State", "City", "ZipCode", "MobileNumber"]
+        self.signupPage.fillSignUpFullForm(self.isMale, "oldddddd", "1234aaaa", "8", "May", "1998", True, self.fullAddress[0], self.fullAddress[1],
+                                      self.fullAddress[2], self.fullAddress[3], self.fullAddress[4], self.fullAddress[5], self.fullAddress[6],
+                                           self.fullAddress[7], self.fullAddress[8], self.fullAddress[9])
 
-    def test_verify_account_created_test(self):
-        self.driver.get("http://automationexercise.com/signup")
-        self.registerLoginPage.fillSignupForm("oldddddd", "Userdddssfdfsddfddfdfsdf@usddser")
-        self.registerLoginPage.getSignupButton().click()
-        self.signupPage.fillSignUpFullForm(True, "oldddddd", "1234aaaa", "8", "May", "1998", True, "firstname", "lastname",
-                                      "company", "address", "address2", "Australia", "State", "City", "ZipCode", "MobileNumber")
         self.signupPage.getCreateAccountButton().click()
         accountCreatedText = self.accountCreatedPage.getAccountCreatedText()
         assert "ACCOUNT CREATED!" in accountCreatedText
         self.accountCreatedPage.getContinueButton().click()
 
+    def test_verify_logged_in_as_username(self):
         loggedInUserText = self.homePage.getLoggedInUser()
         assert "Logged in as oldddddd" in loggedInUserText
 
-
-        self.homePage.getItem().click()
-        self.homePage.continueShopping().click()
+    def test_verify_address_details(self):
         self.homePage.getCart().click()
-        sleep(3)
         self.cartPage.getProceedToCheckoutButton().click()
+        deliveryAddress = self.checkoutPage.getDeliveryAddressDetails()
+        billingAddress = self.checkoutPage.getBillingAddressDetails()
+        deliveryAddress.pop()
+        billingAddress.pop()
+        if deliveryAddress == billingAddress:
+            if self.checkoutPage.checkAddressIsSame(deliveryAddress, self.fullAddress, self.isMale):
+                assert "Address Verified"
+        else:
+            print("Address mismatched")
 
-        print(self.checkoutPage.getDeliveryAddressDetails())
-        sleep(10)
-        print(self.checkoutPage.getBillingAddressDetails())
-        sleep(5)
+    def test_verify_payment_details_and_payment_confirmation(self):
         self.checkoutPage.getMessage("This is a comment")
-        sleep(3)
         self.checkoutPage.getPlaceOrderButton().click()
-        sleep(10)
-
-
-
-
-
+        self.paymentPage.enterPaymentDetails("azhaan", "1234", "311", "05", "1998")
+        self.paymentPage.getPayConfirmButton().click()
+        sleep(2)
+        self.driver.back()
+        paymentConfirmationMessage = self.paymentPage.getPaymentConfirmationMessage()
+        print("\n" + paymentConfirmationMessage)
+        assert "Your order has been placed successfully!" in paymentConfirmationMessage
 

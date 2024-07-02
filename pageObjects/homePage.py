@@ -13,6 +13,7 @@ class HomePage:
     homeButton = (By.CSS_SELECTOR, "a[href*='/']")
     slider = (By.ID, "slider-carousel")
     loggedInText = (By.XPATH, "//*[contains(text(), 'Logged in')]")
+    slider = (By.ID, "slider-carousel")
 
     def getHomeButton(self):
         return self.driver.find_element(*HomePage.homeButton)
@@ -28,3 +29,6 @@ class HomePage:
 
     def getLoggedInUser(self):
         return self.driver.find_element(*HomePage.loggedInText).text
+
+    def getSlider(self):
+        return self.driver.find_element(*HomePage.slider)

@@ -28,6 +28,25 @@ class CheckoutPage:
             billingDetails.append(item.text)
         return billingDetails
 
+    def checkAddressIsSame(self, deliveryAddress, addressList, isMale):
+        gender = ""
+        if isMale:
+            gender = "Mr."
+        else:
+            gender = "Mrs."
+        newAddressList = [gender + " " + addressList[0] + " " + addressList[1],
+                          addressList[2],
+                          addressList[3],
+                          addressList[4],
+                          addressList[7] + " " +addressList[6] + " " +addressList[8],
+                          addressList[5],
+                          addressList[9]]
+        if deliveryAddress == newAddressList:
+            return True
+        else:
+            return False
+
+
     def getMessage(self, comment):
         return self.driver.find_element(*CheckoutPage.messageTextArea).send_keys(comment)
 
