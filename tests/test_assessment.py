@@ -6,6 +6,8 @@ from pageObjects.homePage import HomePage
 from pageObjects.cartPage import CartPage
 from pageObjects.registerLoginPage import RegisterLoginPage
 from pageObjects.signupPage import SignupPage
+from pageObjects.accountCreationPage import AccountCreationPage
+from pageObjects.checkoutPage import CheckoutPage
 
 class TestAssessment(BaseClass):
     @pytest.fixture(autouse=True)
@@ -14,6 +16,8 @@ class TestAssessment(BaseClass):
         self.cartPage = CartPage(self.driver)
         self.registerLoginPage = RegisterLoginPage(self.driver)
         self.signupPage = SignupPage(self.driver)
+        self.accountCreatedPage = AccountCreationPage(self.driver)
+        self.checkoutPage = CheckoutPage(self.driver)
 
     def test_verify_home_page_visibility(self):
         homeButtonColor = self.homePage.getHomeButton().value_of_css_property("color")
@@ -23,8 +27,8 @@ class TestAssessment(BaseClass):
         self.homePage.getItem().click()
         self.homePage.continueShopping().click()
         self.homePage.getCart().click()
-        txt = self.cartPage.getShoppingCartText().text
-        if txt == "Shopping Cart":
+        shoppingCartText = self.cartPage.getShoppingCartText().text
+        if shoppingCartText == "Shopping Cart":
             assert self.cartPage.getProceedToCheckoutButton().is_displayed();
 
     def test_verify_account_created_after_checkout(self):
@@ -35,8 +39,37 @@ class TestAssessment(BaseClass):
         self.registerLoginPage.getSignupButton().click()
 
     def test_verify_account_created_test(self):
-
-        self.signupPage.fillSignUpFullForm(True, "nameee", "aa@aaaa.com", "1234aaaa", "8", "May", "1998", True, "firstname", "lastname",
+        self.driver.get("http://automationexercise.com/signup")
+        self.registerLoginPage.fillSignupForm("oldddddd", "Userdddssfdfsddfddfdfsdf@usddser")
+        self.registerLoginPage.getSignupButton().click()
+        self.signupPage.fillSignUpFullForm(True, "oldddddd", "1234aaaa", "8", "May", "1998", True, "firstname", "lastname",
                                       "company", "address", "address2", "Australia", "State", "City", "ZipCode", "MobileNumber")
         self.signupPage.getCreateAccountButton().click()
-        sleep(20)
+        accountCreatedText = self.accountCreatedPage.getAccountCreatedText()
+        assert "ACCOUNT CREATED!" in accountCreatedText
+        self.accountCreatedPage.getContinueButton().click()
+
+        loggedInUserText = self.homePage.getLoggedInUser()
+        assert "Logged in as oldddddd" in loggedInUserText
+
+
+        self.homePage.getItem().click()
+        self.homePage.continueShopping().click()
+        self.homePage.getCart().click()
+        sleep(3)
+        self.cartPage.getProceedToCheckoutButton().click()
+
+        print(self.checkoutPage.getDeliveryAddressDetails())
+        sleep(10)
+        print(self.checkoutPage.getBillingAddressDetails())
+        sleep(5)
+        self.checkoutPage.getMessage("This is a comment")
+        sleep(3)
+        self.checkoutPage.getPlaceOrderButton().click()
+        sleep(10)
+
+
+
+
+
+

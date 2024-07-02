@@ -12,6 +12,7 @@ class HomePage:
     cartLink = (By.CSS_SELECTOR, "a[href*='/view_cart']")
     homeButton = (By.CSS_SELECTOR, "a[href*='/']")
     slider = (By.ID, "slider-carousel")
+    loggedInText = (By.XPATH, "//*[contains(text(), 'Logged in')]")
 
     def getHomeButton(self):
         return self.driver.find_element(*HomePage.homeButton)
@@ -22,8 +23,8 @@ class HomePage:
     def continueShopping(self):
         return WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(HomePage.continueShoppingButton))
 
-
-
     def getCart(self):
         return self.driver.find_element(*HomePage.cartLink)
 
+    def getLoggedInUser(self):
+        return self.driver.find_element(*HomePage.loggedInText).text

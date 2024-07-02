@@ -37,10 +37,12 @@ class SignupPage(BaseClass):
             return self.driver.find_element(*SignupPage.titleFemaleRadioButton).click()
 
     def getName(self, name):
-        return self.driver.find_element(*SignupPage.nameField).send_keys(name)
+        if self.driver.find_element(*SignupPage.nameField).get_attribute("value") == name:
+            return
+        else:
+            self.driver.find_element(*SignupPage.nameField).clear()
+            return self.driver.find_element(*SignupPage.nameField).send_keys(name)
 
-    def getEmail(self, email):
-        return self.driver.find_element(*SignupPage.emailField).send_keys(email)
 
     def getPassword(self, password):
         return self.driver.find_element(*SignupPage.passwordField).send_keys(password)
@@ -90,11 +92,10 @@ class SignupPage(BaseClass):
     def getMobileNumber(self, mobile):
         return self.driver.find_element(*SignupPage.mobileNumberField).send_keys(mobile)
 
-    def fillSignUpFullForm(self, isMale, name, email, password, date, month, year, requireNewsletter,
+    def fillSignUpFullForm(self, isMale, name, password, date, month, year, requireNewsletter,
                            firstname, lastname, company, address, address2, country, state, city, zipcode, mobile):
         self.getTitle(isMale)
-        #self.getName(name)
-        #self.getEmail(email)
+        self.getName(name)
         self.getPassword(password)
         self.selectDate(date)
         self.selectMonth(month)

@@ -8,7 +8,7 @@ class CartPage:
         self.driver = driver
 
     shoppingCartText = (By.CSS_SELECTOR, "li[class='active']")
-    proceedToCheckoutButton = (By.CSS_SELECTOR, ".check_out")
+    proceedToCheckoutButton = (By.XPATH, "//a[contains(text(), 'Proceed To Checkout')]")
     registerLoginLink = (By.CSS_SELECTOR, "p a[href*='/login']")
 
     def getShoppingCartText(self):
