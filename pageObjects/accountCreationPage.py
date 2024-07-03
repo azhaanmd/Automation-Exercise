@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class AccountCreationPage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     accountCreatedText = (By.CSS_SELECTOR, "h2[data-qa='account-created']")
     continueButton = (By.CSS_SELECTOR, "a[data-qa='continue-button']")

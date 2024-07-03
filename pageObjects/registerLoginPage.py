@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class RegisterLoginPage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     signupName = (By.CSS_SELECTOR, "input[data-qa='signup-name']")
     signupEmail = (By.CSS_SELECTOR, "input[data-qa='signup-email']")

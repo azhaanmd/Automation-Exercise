@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class PaymentPage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     nameOnCardField = (By.CSS_SELECTOR, "input[name='name_on_card']")
     cardNumberField = (By.CSS_SELECTOR, "input[name='card_number']")

@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class CartPage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     shoppingCartText = (By.CSS_SELECTOR, "li[class='active']")
     proceedToCheckoutButton = (By.XPATH, "//a[contains(text(), 'Proceed To Checkout')]")

@@ -21,6 +21,7 @@ class TestAssessment(BaseClass):
         self.accountCreatedPage = AccountCreationPage(self.driver)
         self.checkoutPage = CheckoutPage(self.driver)
         self.paymentPage = PaymentPage(self.driver)
+        self.driver.implicitly_wait(10)
 
     def test_verify_home_page_visibility(self):
         homeButtonColor = self.homePage.getHomeButton().value_of_css_property("color")
@@ -77,7 +78,7 @@ class TestAssessment(BaseClass):
         self.checkoutPage.getPlaceOrderButton().click()
         self.paymentPage.enterPaymentDetails("azhaan", "1234", "311", "05", "1998")
         self.paymentPage.getPayConfirmButton().click()
-        sleep(2)
+        sleep(5)
         self.driver.back()
         paymentConfirmationMessage = self.paymentPage.getPaymentConfirmationMessage()
         print("\n" + paymentConfirmationMessage)

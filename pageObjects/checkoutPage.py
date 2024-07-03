@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class CheckoutPage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     deliveryAddress = (By.CSS_SELECTOR, "ul[id='address_delivery']")
     billingAddress = (By.CSS_SELECTOR, "ul[id='address_invoice']")

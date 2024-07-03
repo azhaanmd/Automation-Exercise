@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class HomePage:
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     item = (By.CSS_SELECTOR, "a[data-product-id='11']")
     continueShoppingButton = (By.CSS_SELECTOR, ".btn.btn-success.close-modal.btn-block")

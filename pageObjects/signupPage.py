@@ -8,6 +8,7 @@ from utilities.BaseClass import BaseClass
 class SignupPage(BaseClass):
     def __init__(self, driver):
         self.driver = driver
+        self.driver.implicitly_wait(10)
 
     titleMaleRadioButton = (By.ID, "id_gender1")
     titleFemaleRadioButton = (By.ID, "id_gender2")
