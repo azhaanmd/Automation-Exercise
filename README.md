@@ -1,4 +1,4 @@
-Hello, this is an automation project for **"automationexercise.com"**. The project is made of **Python**, **Selenium** and **Pytest**. It is maintaied with **Page Object
+Hello, this is an automation project for **"automationexercise.com"**. The project is made of **Python**, **Selenium** and **Pytest**. It is maintained with **Page Object
 Model** structure. The automation project consists the following steps.
 
 1. Launch browser(Chrome/Firefox)
