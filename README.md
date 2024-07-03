@@ -23,7 +23,7 @@ Model** structure. The automation project consists the following steps.
 **To run the project follow the steps below:**
 1. Download or clone the project
 2. Open the project using Pycharm(Preferable) or VS Code
-3. Change Directory > **cd kinetikenv\Scripts\***
+3. Change Directory > **cd kinetikenv\Scripts** (add \ in the end)
 4. Activate Virtual Environment > **activate.bat**
 5. Back to Homepage > **cd ..** (2 times)
 6. Install Required Packages > **pip install -r requirements.txt**
